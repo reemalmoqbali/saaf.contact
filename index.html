@@ -44,7 +44,8 @@
 
     body{
       font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height:100vh;
+      min-height: 100vh;
+      min-height: 100dvh;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -728,9 +729,21 @@
     }
 
     @media (max-width: 520px){
+      body{
+        min-height: 100dvh;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 12px;
+      }
+
       .container-wrap{
         width: min(100%, calc(100vw - 24px));
+        margin: auto;
+        flex-shrink: 0;
       }
+
       .container-wrap::before{ inset: -12px -6px; }
       .container{
         padding: 28px 16px 28px;
@@ -764,11 +777,43 @@
       .channels-label{ margin-bottom: 10px; }
       .social-links{ gap: 12px; }
       .social-icon{
-        min-height: 80px;
-        padding: 14px 12px;
-        gap: 12px;
-        grid-template-columns: 56px 1fr auto;
+        min-height: auto;
+        padding: 14px 14px 12px;
+        gap: 10px 12px;
+        grid-template-columns: 56px 1fr;
+        grid-template-areas:
+          "icon meta"
+          "cta cta";
+        align-items: center;
+        overflow: visible;
         border-radius: 18px;
+      }
+
+      .icon-cell{
+        grid-area: icon;
+        align-self: center;
+      }
+
+      .social-icon .meta{
+        grid-area: meta;
+        align-self: center;
+      }
+
+      .social-icon .card-cta{
+        grid-area: cta;
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+        align-self: stretch;
+        padding: 10px 14px;
+        min-height: 38px;
+        font-size: 0.68rem;
+        gap: 8px;
+        margin-top: 2px;
+      }
+
+      .social-icon .card-cta-text{
+        display: inline !important;
       }
       .icon-wrapper{
         width: 56px;
@@ -787,11 +832,6 @@
         font-size: 0.88rem;
         white-space: normal;
       }
-      .card-cta{
-        padding: 8px 10px;
-        font-size: 0.62rem;
-        gap: 5px;
-      }
       .footer-note{
         margin-top: 20px;
         padding-top: 16px;
@@ -801,16 +841,14 @@
 
     @media (max-width: 480px){
       body{
-        padding: 12px 10px;
-        align-items: flex-start;
-        padding-top: 14px;
+        padding: 14px 10px;
       }
       .container-wrap{
         width: 100%;
         max-width: calc(100vw - 20px);
       }
       .container{
-        padding: 24px 14px 24px;
+        padding: 24px 14px 22px;
       }
       .card-header{
         margin-bottom: 10px;
@@ -828,10 +866,15 @@
       .logo-wrap::after{ width: 84px; height: 84px; }
       .section-divider{ margin: 16px 0 14px; }
       .social-icon{
-        min-height: 76px;
-        padding: 12px 10px;
-        gap: 10px;
-        grid-template-columns: 52px 1fr auto;
+        padding: 12px 12px 10px;
+        gap: 8px 10px;
+        grid-template-columns: 52px 1fr;
+      }
+
+      .social-icon .card-cta{
+        min-height: 36px;
+        padding: 9px 12px;
+        font-size: 0.65rem;
       }
       .icon-wrapper{
         width: 52px;
@@ -844,21 +887,26 @@
       .whatsapp .icon-wrapper i.fa-whatsapp{
         font-size: 24px;
       }
-      .card-cta .card-cta-text{ display: none; }
     }
 
     @media (max-width: 360px){
-      body{ padding: 10px 8px; }
+      body{ padding: 12px 8px; }
       .container{
-        padding: 22px 12px 22px;
+        padding: 20px 12px 20px;
       }
       h1{ font-size: 1.75rem; }
       .logo{ width: 88px; }
       .logo-wrap::before{ width: 116px; height: 116px; }
       .logo-wrap::after{ width: 76px; height: 76px; }
       .social-icon{
-        grid-template-columns: 48px 1fr auto;
-        min-height: 72px;
+        grid-template-columns: 48px 1fr;
+        padding: 11px 11px 9px;
+      }
+
+      .social-icon .card-cta{
+        min-height: 34px;
+        font-size: 0.62rem;
+        padding: 8px 10px;
       }
       .icon-wrapper{
         width: 48px;
