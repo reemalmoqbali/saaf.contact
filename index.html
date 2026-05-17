@@ -101,12 +101,24 @@
       pointer-events:none;
     }
 
+    .card-header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(10px, 3vw, 16px);
+      width: 100%;
+      min-height: 52px;
+      margin: 0 0 14px;
+      position: relative;
+      z-index: 2;
+    }
+
     .lang-switcher{
-      position: absolute;
-      top: clamp(14px, 3vw, 20px);
-      inset-inline-end: clamp(14px, 3vw, 20px);
-      z-index: 10;
       display: inline-flex;
+      align-items: stretch;
+      flex-shrink: 0;
+      align-self: center;
+      min-height: 38px;
       border-radius: 999px;
       border: 1px solid rgba(198, 172, 146, 0.35);
       background: rgba(41, 34, 28, 0.75);
@@ -116,7 +128,11 @@
     }
 
     .lang-btn{
-      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -145,7 +161,7 @@
       max-width: 100%;
       position: relative;
       text-align: center;
-      padding: clamp(48px, 6vw, 64px) clamp(28px, 5vw, 48px) clamp(40px, 5vw, 52px);
+      padding: clamp(28px, 4.5vw, 40px) clamp(28px, 5vw, 48px) clamp(40px, 5vw, 52px);
       border-radius: 32px;
       background: linear-gradient(175deg, var(--glass-top) 0%, var(--glass-bottom) 100%);
       border: 1px solid var(--stroke);
@@ -194,18 +210,19 @@
     .logo-wrap{
       position: relative;
       width: fit-content;
-      margin: 0 auto 6px;
-      padding-bottom: 0;
+      margin: 0;
+      padding: 0;
       line-height: 0;
       display: grid;
       place-items: center;
+      flex-shrink: 0;
     }
 
     .logo-wrap::before{
       content:"";
       position:absolute;
-      width: 220px;
-      height: 220px;
+      width: 168px;
+      height: 168px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(198, 172, 146, 0.28) 0%, rgba(198, 172, 146, 0.08) 42%, transparent 68%);
       filter: blur(18px);
@@ -216,8 +233,8 @@
     .logo-wrap::after{
       content:"";
       position:absolute;
-      width: 140px;
-      height: 140px;
+      width: 108px;
+      height: 108px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 239, 207, 0.12) 0%, transparent 70%);
       filter: blur(8px);
@@ -228,7 +245,8 @@
     .logo{
       position: relative;
       z-index: 1;
-      width: 170px;
+      width: 128px;
+      max-width: 42vw;
       height: auto;
       display: block;
       margin: 0;
@@ -275,7 +293,7 @@
     h1{
       font-size: clamp(2.35rem, 6vw, 3rem);
       letter-spacing: -0.03em;
-      margin-top: 2px;
+      margin-top: 0;
       margin-bottom: 10px;
       padding-top: 0;
       font-weight: 700;
@@ -715,13 +733,19 @@
       }
       .container-wrap::before{ inset: -12px -6px; }
       .container{
-        padding: 40px 16px 28px;
+        padding: 28px 16px 28px;
         border-radius: 24px;
       }
-      .logo{ width: 160px; }
-      .logo-wrap{ margin-bottom: 4px; }
-      .logo-wrap::before{ width: 180px; height: 180px; }
-      .logo-wrap::after{ width: 120px; height: 120px; }
+      .card-header{
+        min-height: 48px;
+        margin-bottom: 12px;
+        gap: 10px;
+      }
+      .logo{ width: 112px; }
+      .logo-wrap::before{ width: 148px; height: 148px; }
+      .logo-wrap::after{ width: 96px; height: 96px; }
+      .lang-switcher{ min-height: 36px; }
+      .lang-btn{ min-height: 36px; padding: 0 12px; font-size: 0.68rem; }
       h1{
         font-size: clamp(1.85rem, 8vw, 2.35rem);
         margin-bottom: 8px;
@@ -786,18 +810,22 @@
         max-width: calc(100vw - 20px);
       }
       .container{
-        padding: 36px 14px 24px;
-        padding-top: 42px;
+        padding: 24px 14px 24px;
       }
-      .lang-switcher{
-        top: 12px;
-        inset-inline-end: 12px;
+      .card-header{
+        margin-bottom: 10px;
+        gap: 8px;
+        min-height: 44px;
       }
+      .lang-switcher{ min-height: 34px; }
       .lang-btn{
-        padding: 7px 12px;
-        font-size: 0.68rem;
+        min-height: 34px;
+        padding: 0 11px;
+        font-size: 0.65rem;
       }
-      .logo{ width: 148px; }
+      .logo{ width: 96px; }
+      .logo-wrap::before{ width: 128px; height: 128px; }
+      .logo-wrap::after{ width: 84px; height: 84px; }
       .section-divider{ margin: 16px 0 14px; }
       .social-icon{
         min-height: 76px;
@@ -822,11 +850,12 @@
     @media (max-width: 360px){
       body{ padding: 10px 8px; }
       .container{
-        padding: 34px 12px 22px;
-        padding-top: 40px;
+        padding: 22px 12px 22px;
       }
       h1{ font-size: 1.75rem; }
-      .logo{ width: 136px; }
+      .logo{ width: 88px; }
+      .logo-wrap::before{ width: 116px; height: 116px; }
+      .logo-wrap::after{ width: 76px; height: 76px; }
       .social-icon{
         grid-template-columns: 48px 1fr auto;
         min-height: 72px;
@@ -845,18 +874,19 @@
 <body>
   <div class="container-wrap">
   <div class="container">
-    <div class="lang-switcher" role="group" aria-label="Language">
-      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-      <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false">AR</button>
-    </div>
     <div class="top-sweep"></div>
 
     <div class="card-inner">
 
-    <!-- ✅ KHOS Logo (no border, bigger, animated) -->
-    <div class="logo-wrap" aria-label="KHOS Logo">
-      <img class="logo" src="logo.PNG" alt="KHOS Logo" />
-    </div>
+    <header class="card-header">
+      <div class="logo-wrap" aria-label="KHOS Logo">
+        <img class="logo" src="logo.PNG" alt="KHOS Logo" />
+      </div>
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false">AR</button>
+      </div>
+    </header>
 
     <h1>
       <span class="title-green" data-i18n="titleMain">Contact</span><span class="title-alt" data-i18n="titleAlt"> Us</span>
