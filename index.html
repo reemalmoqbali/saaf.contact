@@ -34,6 +34,14 @@
 
     *{ margin:0; padding:0; box-sizing:border-box; }
 
+    html{
+      overflow-x: hidden;
+    }
+
+    html[dir="rtl"] body{
+      font-family: "Segoe UI", "Tahoma", system-ui, sans-serif;
+    }
+
     body{
       font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       min-height:100vh;
@@ -93,8 +101,48 @@
       pointer-events:none;
     }
 
+    .lang-switcher{
+      position: absolute;
+      top: clamp(14px, 3vw, 20px);
+      inset-inline-end: clamp(14px, 3vw, 20px);
+      z-index: 10;
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid rgba(198, 172, 146, 0.35);
+      background: rgba(41, 34, 28, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .lang-btn{
+      padding: 8px 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--brown-light);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .lang-btn:hover{
+      color: var(--cream);
+    }
+
+    .lang-btn.active{
+      background: rgba(198, 172, 146, 0.22);
+      color: var(--cream);
+    }
+
+    .lang-btn + .lang-btn{
+      border-inline-start: 1px solid rgba(198, 172, 146, 0.25);
+    }
+
     .container{
       width: 100%;
+      max-width: 100%;
       position: relative;
       text-align: center;
       padding: clamp(48px, 6vw, 64px) clamp(28px, 5vw, 48px) clamp(40px, 5vw, 52px);
@@ -317,12 +365,13 @@
     .social-icon{
       position: relative;
       width: 100%;
+      max-width: 100%;
       min-height: 96px;
       text-decoration: none;
       border-radius: 22px;
       padding: 20px 20px 20px 22px;
-      background: linear-gradient(135deg, rgba(41, 34, 28, 0.82) 0%, rgba(59, 50, 43, 0.45) 100%);
-      border: 1px solid rgba(198, 172, 146, 0.22);
+      background: linear-gradient(135deg, rgba(41, 34, 28, 0.9) 0%, rgba(59, 50, 43, 0.55) 100%);
+      border: 1px solid rgba(198, 172, 146, 0.28);
       box-shadow:
         0 12px 32px rgba(0, 0, 0, 0.28),
         inset 0 1px 0 rgba(255, 239, 207, 0.06);
@@ -461,12 +510,16 @@
       z-index: 1;
       width: 64px;
       height: 64px;
+      min-width: 64px;
+      min-height: 64px;
       border-radius: 18px;
-      display: grid;
-      place-items: center;
-      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 28px;
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 239, 207, 0.14);
       box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.35),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -475,12 +528,31 @@
         transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    .icon-wrapper i,
+    .icon-wrapper .fa-fallback{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .icon-wrapper i{
+      width: 1em;
+      height: 1em;
+    }
+
+    .whatsapp .icon-wrapper i.fa-whatsapp{
+      font-size: 30px;
+      transform: translateY(1px);
+    }
+
     .social-icon:hover .icon-wrapper{
       transform: scale(1.06);
     }
 
     .instagram .icon-wrapper{
-      background: linear-gradient(145deg, #8f5e48 0%, #d4739a 38%, #a8558f 72%, #7a3d62 100%);
+      background: linear-gradient(145deg, var(--brown-main) 0%, #a86b7a 45%, #8e4d68 100%);
       box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.35),
         0 0 20px rgba(196, 92, 122, 0.25),
@@ -495,7 +567,7 @@
     }
 
     .whatsapp .icon-wrapper{
-      background: linear-gradient(145deg, var(--brown-dark) 0%, #2d6b52 42%, #35c76a 100%);
+      background: linear-gradient(145deg, var(--brown-dark) 0%, var(--brown-main) 38%, #2f8f55 100%);
       box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.35),
         0 0 18px rgba(53, 199, 106, 0.2),
@@ -530,16 +602,12 @@
       height: 32px;
     }
 
-    .icon-wrapper i{
-      display: inline-block;
-    }
-
     .icon-wrapper i:empty{
       display: none;
     }
 
     .icon-wrapper i:empty + .fa-fallback{
-      display: block;
+      display: flex;
     }
 
     .meta{
@@ -619,47 +687,156 @@
       line-height: 1.5;
     }
 
+    html[dir="rtl"] .meta,
+    html[dir="rtl"] .channels-label{
+      text-align: right;
+    }
+
+    html[dir="rtl"] .social-icon::after{
+      left: auto;
+      right: 0;
+      border-radius: 4px 0 0 4px;
+    }
+
+    html[dir="rtl"] .subtitle,
+    html[dir="rtl"] .label,
+    html[dir="rtl"] .card-cta{
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    html[dir="rtl"] .social-icon:hover .card-cta i{
+      transform: translate(-4px, -2px);
+    }
+
     @media (max-width: 520px){
-      .container-wrap::before{ inset: -16px -8px; }
+      .container-wrap{
+        width: min(100%, calc(100vw - 24px));
+      }
+      .container-wrap::before{ inset: -12px -6px; }
       .container{
-        padding: 44px 20px 36px;
-        border-radius: 26px;
+        padding: 40px 16px 28px;
+        border-radius: 24px;
       }
       .logo{ width: 160px; }
-      .logo-wrap::before{ width: 190px; height: 190px; }
-      .section-divider{ margin: 24px 0 22px; }
+      .logo-wrap{ margin-bottom: 4px; }
+      .logo-wrap::before{ width: 180px; height: 180px; }
+      .logo-wrap::after{ width: 120px; height: 120px; }
+      h1{
+        font-size: clamp(1.85rem, 8vw, 2.35rem);
+        margin-bottom: 8px;
+      }
+      .tagline{
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+        max-width: 100%;
+      }
+      .subtitle{
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        max-width: 100%;
+      }
+      .section-divider{ margin: 20px 0 18px; }
+      .channels-label{ margin-bottom: 10px; }
+      .social-links{ gap: 12px; }
       .social-icon{
-        min-height: 88px;
-        padding: 18px 16px;
-        gap: 14px;
-        grid-template-columns: auto 1fr auto;
+        min-height: 80px;
+        padding: 14px 12px;
+        gap: 12px;
+        grid-template-columns: 56px 1fr auto;
+        border-radius: 18px;
       }
       .icon-wrapper{
         width: 56px;
         height: 56px;
-        font-size: 26px;
+        min-width: 56px;
+        min-height: 56px;
+        font-size: 24px;
         border-radius: 16px;
       }
-      .fa-fallback{ width: 28px; height: 28px; }
+      .whatsapp .icon-wrapper i.fa-whatsapp{
+        font-size: 26px;
+      }
+      .fa-fallback{ width: 26px; height: 26px; }
+      .label{ font-size: 0.75rem; }
+      .hint{
+        font-size: 0.88rem;
+        white-space: normal;
+      }
       .card-cta{
         padding: 8px 10px;
-        font-size: 0.65rem;
-        gap: 6px;
+        font-size: 0.62rem;
+        gap: 5px;
       }
-      .card-cta .card-cta-text{ display: none; }
-      .hint{ font-size: 0.92rem; }
+      .footer-note{
+        margin-top: 20px;
+        padding-top: 16px;
+        font-size: 0.82rem;
+      }
     }
 
-    @media (max-width: 380px){
-      h1{ letter-spacing: -0.01em; }
-      .social-icon{
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto auto;
+    @media (max-width: 480px){
+      body{
+        padding: 12px 10px;
+        align-items: flex-start;
+        padding-top: 14px;
       }
-      .card-cta{
-        grid-column: 2;
-        justify-self: end;
-        margin-top: -4px;
+      .container-wrap{
+        width: 100%;
+        max-width: calc(100vw - 20px);
+      }
+      .container{
+        padding: 36px 14px 24px;
+        padding-top: 42px;
+      }
+      .lang-switcher{
+        top: 12px;
+        inset-inline-end: 12px;
+      }
+      .lang-btn{
+        padding: 7px 12px;
+        font-size: 0.68rem;
+      }
+      .logo{ width: 148px; }
+      .section-divider{ margin: 16px 0 14px; }
+      .social-icon{
+        min-height: 76px;
+        padding: 12px 10px;
+        gap: 10px;
+        grid-template-columns: 52px 1fr auto;
+      }
+      .icon-wrapper{
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        min-height: 52px;
+        font-size: 22px;
+        border-radius: 14px;
+      }
+      .whatsapp .icon-wrapper i.fa-whatsapp{
+        font-size: 24px;
+      }
+      .card-cta .card-cta-text{ display: none; }
+    }
+
+    @media (max-width: 360px){
+      body{ padding: 10px 8px; }
+      .container{
+        padding: 34px 12px 22px;
+        padding-top: 40px;
+      }
+      h1{ font-size: 1.75rem; }
+      .logo{ width: 136px; }
+      .social-icon{
+        grid-template-columns: 48px 1fr auto;
+        min-height: 72px;
+      }
+      .icon-wrapper{
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        font-size: 20px;
       }
     }
   </style>
@@ -668,6 +845,10 @@
 <body>
   <div class="container-wrap">
   <div class="container">
+    <div class="lang-switcher" role="group" aria-label="Language">
+      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false">AR</button>
+    </div>
     <div class="top-sweep"></div>
 
     <div class="card-inner">
@@ -678,20 +859,20 @@
     </div>
 
     <h1>
-      <span class="title-green">Contact</span><span class="title-alt"> Us</span>
+      <span class="title-green" data-i18n="titleMain">Contact</span><span class="title-alt" data-i18n="titleAlt"> Us</span>
     </h1>
 
-    <p class="tagline">
+    <p class="tagline" data-i18n="tagline">
       Connect with KHOS through our official channels.
     </p>
 
-    <p class="subtitle">
+    <p class="subtitle" data-i18n="subtitle">
       Choose your preferred way to connect with us.
     </p>
 
     <div class="section-divider" aria-hidden="true"><span></span></div>
 
-    <p class="channels-label">Official channels</p>
+    <p class="channels-label" data-i18n="channelsLabel">Official channels</p>
 
     <div class="social-links">
 
@@ -712,10 +893,10 @@
           </div>
         </div>
         <div class="meta">
-          <div class="label">Instagram</div>
-          <div class="hint">@khos</div>
+          <div class="label" data-i18n="igLabel">Instagram</div>
+          <div class="hint" data-i18n="igHint">@khos</div>
         </div>
-        <span class="card-cta"><span class="card-cta-text">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
+        <span class="card-cta"><span class="card-cta-text" data-i18n="open">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
       </a>
 
       <!-- WhatsApp (بدّلي الرقم هنا) -->
@@ -735,10 +916,10 @@
           </div>
         </div>
         <div class="meta">
-          <div class="label">WhatsApp</div>
-          <div class="hint">Chat with KHOS support</div>
+          <div class="label" data-i18n="waLabel">WhatsApp</div>
+          <div class="hint" data-i18n="waHint">Chat with KHOS support</div>
         </div>
-        <span class="card-cta"><span class="card-cta-text">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
+        <span class="card-cta"><span class="card-cta-text" data-i18n="open">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
       </a>
 
       <!-- ✅ NEW: KHOS Website -->
@@ -758,20 +939,101 @@
           </div>
         </div>
         <div class="meta">
-          <div class="label">Website</div>
-          <div class="hint">Visit KHOS Web</div>
+          <div class="label" data-i18n="webLabel">Website</div>
+          <div class="hint" data-i18n="webHint">Visit KHOS Web</div>
         </div>
-        <span class="card-cta"><span class="card-cta-text">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
+        <span class="card-cta"><span class="card-cta-text" data-i18n="open">Open</span><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>
       </a>
 
     </div>
 
-    <div class="footer-note">
+    <div class="footer-note" data-i18n="footer">
       We reply as soon as possible during working hours.
     </div>
 
     </div><!-- .card-inner -->
   </div>
   </div><!-- .container-wrap -->
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "khos-contact-lang";
+      var translations = {
+        en: {
+          pageTitle: "Contact | KHOS",
+          titleMain: "Contact",
+          titleAlt: " Us",
+          tagline: "Connect with KHOS through our official channels.",
+          subtitle: "Choose your preferred way to connect with us.",
+          channelsLabel: "Official channels",
+          igLabel: "Instagram",
+          igHint: "@khos",
+          waLabel: "WhatsApp",
+          waHint: "Chat with KHOS support",
+          webLabel: "Website",
+          webHint: "Visit KHOS Web",
+          open: "Open",
+          footer: "We reply as soon as possible during working hours."
+        },
+        ar: {
+          pageTitle: "تواصل معنا | خوص",
+          titleMain: "تواصل",
+          titleAlt: " معنا",
+          tagline: "تواصل مع خوص عبر قنواتنا الرسمية.",
+          subtitle: "اختر الطريقة المناسبة للتواصل معنا.",
+          channelsLabel: "القنوات الرسمية",
+          igLabel: "إنستغرام",
+          igHint: "@khos",
+          waLabel: "واتساب",
+          waHint: "تواصل مع دعم خوص",
+          webLabel: "الموقع الإلكتروني",
+          webHint: "زيارة موقع خوص",
+          open: "فتح",
+          footer: "نرد عليكم في أقرب وقت ممكن خلال ساعات العمل."
+        }
+      };
+
+      function getStoredLang() {
+        try {
+          var stored = localStorage.getItem(STORAGE_KEY);
+          return stored === "ar" || stored === "en" ? stored : "en";
+        } catch (e) {
+          return "en";
+        }
+      }
+
+      function setLang(lang) {
+        var dict = translations[lang] || translations.en;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.title = dict.pageTitle;
+
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (dict[key] !== undefined) {
+            el.textContent = dict[key];
+          }
+        });
+
+        document.querySelectorAll(".lang-btn").forEach(function (btn) {
+          var active = btn.getAttribute("data-lang") === lang;
+          btn.classList.toggle("active", active);
+          btn.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+      }
+
+      document.querySelectorAll(".lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setLang(btn.getAttribute("data-lang"));
+        });
+      });
+
+      setLang(getStoredLang());
+    })();
+  </script>
 </body>
 </html>
